@@ -2314,17 +2314,28 @@ const WEATHER_DATA = [{"Station_ID":42026,"Station_Name":"Leh","Latitude":34.152
   }
 
   // ---- Geocoding (typed place name -> coordinates) ----
+  // Restricted to India first (countryCode=IN) so ambiguous names such as
+  // "Kochi" resolve to Kerala rather than Japan. If nothing in India matches,
+  // fall back to a worldwide lookup so explicitly foreign places still work.
+  async function geocodeOpenMeteo(query, countryCode){
+    const url = `${GEOCODE_URL}?name=${encodeURIComponent(query)}&count=5&language=en&format=json`
+      + (countryCode ? `&countryCode=${countryCode}` : '');
+    const res = await fetch(url);
+    if(!res.ok) return [];
+    const data = await res.json();
+    return (data.results || []).map(r => ({
+      lat: r.latitude, lon: r.longitude,
+      label: [r.name, r.admin1, r.country].filter(Boolean).join(', ')
+    }));
+  }
+
   async function geocodePlace(query){
     if(!query || query.trim().length < 2) return [];
+    const q = query.trim();
     try{
-      const url = `${GEOCODE_URL}?name=${encodeURIComponent(query.trim())}&count=5&language=en&format=json`;
-      const res = await fetch(url);
-      if(!res.ok) return [];
-      const data = await res.json();
-      return (data.results || []).map(r => ({
-        lat: r.latitude, lon: r.longitude,
-        label: [r.name, r.admin1, r.country].filter(Boolean).join(', ')
-      }));
+      const india = await geocodeOpenMeteo(q, 'IN');
+      if(india.length) return india;
+      return await geocodeOpenMeteo(q);
     }catch(err){ return []; }
   }
 
