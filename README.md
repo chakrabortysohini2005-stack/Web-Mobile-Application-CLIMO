@@ -322,9 +322,9 @@ Web-Mobile-Application-CLIMO/
 - [x] 2000–2030 climate time machine (observed + LSTM forecast)
 - [x] 16-language UI and a rule-based Weather Buddy
 - [x] Android APK through CI
+- [x] Restrict assistant geocoding to India (e.g. *Kochi* can resolve to Japan)
 - [ ] Real SMS relay (serverless function) to replace the simulated one
 - [ ] Persist and share community feedback (it currently stays on the device)
-- [ ] Restrict assistant geocoding to India (e.g. *Kochi* can resolve to Japan)
 - [ ] Move the routing key behind a proxy ([SECURITY.md](SECURITY.md))
 - [ ] Map hospitals, schools and fire stations (promised on the landing page)
 - [ ] Offline cache / PWA install

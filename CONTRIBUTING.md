@@ -120,7 +120,7 @@ There is no automated suite yet (adding Playwright smoke tests would be a great 
 
 | Idea | Where |
 |:--|:--|
-| Restrict geocoding to India (`&countryCode=IN`) so *Kochi* doesn't resolve to Japan | `geocodePlace()` |
+| ✅ ~~Restrict geocoding to India (`&countryCode=IN`) so *Kochi* doesn't resolve to Japan~~ (done) | `geocodePlace()` |
 | Wire `verifyReport()` into the Local feedback box (it exists but is never called) | `openDrawer()` |
 | Translate dynamic strings (drawer, route status, assistant replies) | `js/app.js` |
 | Set `dir="rtl"` for Urdu | `applyLanguage()` |
